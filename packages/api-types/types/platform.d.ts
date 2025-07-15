@@ -7397,11 +7397,38 @@ export interface components {
         tenant_id: string
       }[]
     }
-    ReplicationPipelinesStatusResponse: {
+    ReplicationPipelineStatusResponse: {
       /** @description Pipeline id */
       pipeline_id: number
       /** @description Pipeline status */
-      status: string
+      status:
+        | {
+            /** @enum {string} */
+            name: 'stopped'
+          }
+        | {
+            /** @enum {string} */
+            name: 'starting'
+          }
+        | {
+            /** @enum {string} */
+            name: 'started'
+          }
+        | {
+            /** @enum {string} */
+            name: 'stopping'
+          }
+        | {
+            /** @enum {string} */
+            name: 'unknown'
+          }
+        | {
+            exit_code?: number | null
+            message?: string | null
+            /** @enum {string} */
+            name: 'failed'
+            reason?: string | null
+          }
     }
     ReplicationPublicationsResponse: {
       /** @description List of publications */
@@ -18565,7 +18592,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          'application/json': components['schemas']['ReplicationPipelinesStatusResponse']
+          'application/json': components['schemas']['ReplicationPipelineStatusResponse']
         }
       }
       403: {
